@@ -1,0 +1,251 @@
+openapi: 3.0.0
+info:
+  title: Jobs API
+  contact: {}
+  version: '1.0'
+servers:
+  - url: https://contacts-app-api.onrender.com
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register User
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserRequest'
+            example:
+              name: bob
+              email: bob@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login User
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserRequest'
+            example:
+              email: susan@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /contacts:
+    post:
+      tags:
+        - Contacts
+      summary: Create Contact
+      operationId: CreateContact
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContactRequest'
+            example:
+              name: gamera
+              email: gamera@gmail.com
+              phone: 653123456
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+        - Contacts
+      summary: Get All Contacts
+      operationId: GetAllContacts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /contacts/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The contact ID
+    get:
+      tags:
+        - Contacts
+      summary: Get Single Contact
+      operationId: GetSingleContact
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+
+    patch:
+      tags:
+        - Contacts
+      summary: Update Contact
+      operationId: UpdateContact
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateContactRequest'
+            example:
+              name: gamerinha
+              email: gamerinha@gmail.com
+              phone: 653123456
+        required: true
+      responses:
+        '200':
+          description: 'OK'
+          headers: {}
+        '400':
+          description: 'Bad request err'
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Contacts
+      summary: Delete Contact
+      operationId: DeleteContact
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /contacts/{id}/{_name}:
+    parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: string
+    - in: path
+      name: _name
+      required: true
+      schema:
+        type: string
+        required: true
+    get:
+      tags:
+        - Contacts
+      summary: Get Contacts by name
+      operationId: GetContactbyName
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    RegisterUserRequest:
+      title: RegisterUserRequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: bob
+        email: bob@gmail.com
+        password: secret
+    LoginUserRequest:
+      title: LoginUserRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: susan@gmail.com
+        password: secret
+    CreateContactRequest:
+      title: CreateContactRequest
+      required:
+        - name
+        - email
+        - phone
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+      example:
+        name: gamera
+        email: gamera@gmail.com
+        phone: 653123456
+    UpdateContactRequest:
+      title: UpdateContactRequest
+      required:
+        - name
+        - email
+        - phone
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+      example:
+        name: gamerinha
+        email: gamerinha@gmail.com
+        phone: 653123456
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+  - httpBearer: []
+tags:
+  - name: Auth
+    description: ''
+  - name: Contacts
+    description: ''
