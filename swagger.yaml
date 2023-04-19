@@ -4,7 +4,7 @@ info:
   contact: {}
   version: '1.0'
 servers:
-  - url: https://contacts-app-api.onrender.com
+  - url: https://contacts-app-restapi.onrender.com
     variables: {}
 paths:
   /auth/register:
