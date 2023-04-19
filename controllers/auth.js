@@ -9,11 +9,6 @@ const register = async (req, res) => {
         throw new BadRequestError('Please provide name, email and password')
     }
 
-    const userUsed = await User.find({ email: email  });
-    if (userUsed) {
-        throw new BadRequestError('Email already in use')
-    }
-
     // save user
     const user = await User.create({...req.body})
     // generate jwt
