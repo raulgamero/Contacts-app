@@ -17,6 +17,8 @@ const getContactbyId = async (req, res) => {
     _id: contactId,
     createdBy: userId,
   })
+
+  // check contact exits
   if (!contact) {
     throw new NotFoundError(`No contact with id ${contactId}`)
   }
@@ -25,17 +27,19 @@ const getContactbyId = async (req, res) => {
 
 const getContactbyName = async (req, res) => {
   const {
-    params: { name: _name },
+    params: { name: name },
     user: { userId }
   } = req
 
-  if (_name === '') {
+  // bad request error
+  if (name === '') {
     throw new BadRequestError('Name or phone or email fields cannot be empty')
   }
 
-  const contacts = await Contact.find({ createdBy: userId, name: _name }).sort('createdAt');
+  // check contact exits with name
+  const contacts = await Contact.find({ createdBy: userId, name: name }).sort('createdAt');
   if (!contacts) {
-    throw new NotFoundError(`No contact with name ${_name}`)
+    throw new NotFoundError(`No contact with name ${name}`)
   }
 
   res.status(StatusCodes.OK).json({ contacts, count: contacts.length })
@@ -60,14 +64,18 @@ const updateContact = async (req, res) => {
     params: { id: contactId },
   } = req
 
+  // bad request error
   if (name === '' || phone === '' || email === '') {
     throw new BadRequestError('Name or phone or email fields cannot be empty')
   }
+  
   const contact = await Contact.findByIdAndUpdate(
     { _id: contactId, createdBy: userId },
     req.body,
     { new: true, runValidators: true }
   )
+
+  // check contact exits
   if (!contact) {
     throw new NotFoundError(`No contact with id ${contactId}`)
   }
@@ -84,6 +92,8 @@ const deleteContact = async (req, res) => {
       _id: contacId,
       createdBy: userId,
     })
+
+    // check contact exits
     if (!contact) {
       throw new NotFoundError(`No contact with id ${contacId}`)
     }
