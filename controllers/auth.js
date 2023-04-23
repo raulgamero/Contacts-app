@@ -15,6 +15,11 @@ const register = async (req, res) => {
         throw new BadRequestError('Email already exists')
     }
 
+    // check if password have at least 6 characters
+    if (password.length < 6) {
+        throw new BadRequestError('Password must be at least 6 characters long')
+    }
+    
     // save user
     const user = await User.create({...req.body})
     // generate jwt
